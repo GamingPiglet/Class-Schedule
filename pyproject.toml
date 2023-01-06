@@ -11,6 +11,10 @@ replit = "^3.2.4"
 Flask = "^2.2.0"
 urllib3 = "^1.26.12"
 pytz = "^2022.7"
+google-api-python-client = "^2.71.0"
+google-auth-httplib2 = "^0.1.0"
+google-auth-oauthlib = "^0.8.0"
+xds-protos = "^0.0.11"
 
 [tool.poetry.dev-dependencies]
 debugpy = "^1.6.2"

@@ -1,12 +1,19 @@
+# for later https://developers.google.com/identity/protocols/oauth2/service-account#python
+
 import os
 import sys
 import datetime
 import pytz
+import json
+from googleapiclient.discovery import build
 from replit import db
+from google.oauth2 import service_account
 
 print("Welcome " + os.getenv("REPL_OWNER")) # prints a little welcome message for the user
 currenttime = datetime.datetime.now(pytz.timezone("America/Toronto"))
 day = currenttime.day % 2
+credentials = service_account.Credentials.from_service_account_info(json.loads(os.getenv("API_CREDENTIALS")), scopes=["https://www.googleapis.com/auth/calendar"]) # initialize credentials from credentials secret
+client = build('calendar', 'v3', discoveryServiceUrl="https://calendar-json.googleapis.com/$discovery/rest?version=v3", credentials=credentials) # set up google calendar api client to decide what times classes occur
 
 if "Period 4" in db.keys():
 	print("Here's today's schedule: \n")
