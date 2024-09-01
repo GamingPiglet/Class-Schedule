@@ -13,7 +13,9 @@ print("Welcome " + os.getenv("REPL_OWNER")) # prints a little welcome message fo
 currenttime = datetime.datetime.now(pytz.timezone("America/Toronto"))
 day = currenttime.day % 2
 credentials = service_account.Credentials.from_service_account_info(json.loads(os.getenv("API_CREDENTIALS")), scopes=["https://www.googleapis.com/auth/calendar"]) # initialize credentials from credentials secret
-client = build('calendar', 'v3', discoveryServiceUrl="https://calendar-json.googleapis.com/$discovery/rest?version=v3", credentials=credentials) # set up google calendar api client to decide what times classes occur
+client = build('calendar', 'v3', discoveryServiceUrl="https://calendar-json.googleapis.com/$discovery/rest?version=v3", credentials=credentials) # set up google calendar api client to decide what times classes occur. i could just not use the discoveryServiceUrl field but for some reason it can't find the api without it
+daysoff = client.events().list(calendarId="c_d3boa08h5mvnj1c7bb218hj6ao@group.calendar.google.com", maxResults=1, singleEvents=True, timeMin=datetime.datetime.utcnow().isoformat() + "Z").execute()["items"]
+latestarts = client.events().list(calendarId="81964c8f563eda3f4ecaad55e66e5fa3b9afb6a3452539bf6146497b82914283@group.calendar.google.com", maxResults=1, singleEvents=True, timeMin=datetime.datetime.utcnow().isoformat() + "Z").execute()["items"]
 
 if "Period 4" in db.keys():
 	print("Here's today's schedule: \n")
